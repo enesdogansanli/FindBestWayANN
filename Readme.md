@@ -4,12 +4,26 @@
 
 - [Yapay Sinir Ağı Kararlarının Birleştirilmesi](#yapay-sinir-ağı-kararlarının-birleştirilmesi)
   - [İçindekiler](#i̇çindekiler)
+  - [Kurulum](#kurulum)
   - [Özet](#özet)
   - [Giriş](#giriş)
   - [Yöntem](#yöntem)
   - [Bulgular](#bulgular)
   - [Sonuç](#sonuç)
   - [Referanslar](#referanslar)
+
+## Kurulum
+
+**Python --version 3.9.13**
+
+```
+pip install pandas
+pip install numpy
+pip install scikit-learn
+pip install matplotlib
+pip install datetime
+pip install prophet
+```
 
 ## Özet
 

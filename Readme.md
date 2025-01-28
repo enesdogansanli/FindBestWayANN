@@ -17,12 +17,7 @@
 **Python --version 3.9.13**
 
 ```
-pip install pandas
-pip install numpy
-pip install scikit-learn
-pip install matplotlib
-pip install datetime
-pip install prophet
+pip install -r requirements.txt
 ```
 
 ## Özet
@@ -39,26 +34,26 @@ Yerel minimum olarak ifade edilen noktalar genel olarak çukur bir yapı olarak 
 
 Yapay Sinir Ağlarının test hatası mimariye, eğitim setine ve ağın parametrelerine bağlıdır. Bu çalışma kapsamında aynı mimariye sahip ve aynı eğitim verisi ile eğitilmiş YSA ile çalışılarak sadece ağın parametreleri üzerinde değişikliklere odaklanılmıştır.Temel olarak her işlem adımında, farklı başlangıç noktaları ile eğitilen YSA modellerinin farklı son noktalara erişmiştir. Erişilen bu son noktalar ikili olarak ele alınmış ve her iki son nokta arasında bir doğru çizilmiştir. Çizilen doğrunun üzerinde bulunan noktaların parametreleri üzerinde çalışılarak en optimum yolun bulunması hedeflenmiştir.
 
-![](Images/Example_Data/1.PNG)
+![](docs/Images/Example_Data/1.PNG)
 
 İlk olarak tespit edilmiş olunan iki adet son nokta arasında (𝜃1, 𝜃2) çizilen doğru eşit parçaya bölünerek N adet nokta belirlenmiştir. Yapılan bu çalışmada N değeri 5 olarak atanmıştır. Ara noktaların belirlenmesinden sonra optimizasyon kısmının yapıldığı işlem adımlarına geçilmiştir. Bu aşamada benzer çalışmalarda sıklıkla kullanılmış ve başarısı kanıtlanmış olan Nudged Elastic Band (NEB) algoritması kullanılmıştır.NEB algoritması, bilinen noktalar arasındaki eyer noktalarını ve minimum enerji yollarını bulmak için geliştirilmiş bir algoritmadır (Jonsson ve diğerleri, 1998). Daha sonra bu metot geliştirilerek daha kısa bir versiyonu yayınlanmıştır (Henkelman & Jonsson, 2000). Bu algoritma özelinde de optimizasyon yöntemlerinde sıklıkla kullanılan Gradient Descent yönteminden faydalanılmaktadır. Ama problem içerisinde birden fazla nokta ile çalışılarak bir yol elde edilmesi temel hedef olduğu için Gradient Descent yönteminin kullanımına ek farklı parametrelerde için içine girmektedir. İlk olarak ele alınan noktanın türevi alınır. Daha sonra ele alınan nokta üzerinde bir koşula bağlı olarak tan (𝜏𝑖) değeri 
 belirlenir. Tan değerinin belirlenmesi aşamasında ilgili noktanın bir sonraki ve bir önceki noktalarının kayıp değerleri karşılaştırılır. Esasen bu kayıp değerine bağlı olarak yönelim yönü belirlenmiş olur. 
 
-![](Images/Example_Data/2.PNG)
+![](docs/Images/Example_Data/2.PNG)
 
 NEB içerisinde geçen elastik kavramı da buradan gelmektedir. Elde edilen Gradient Descent değeri ve tan değerleri NEB algoritmasından gelen bir formüle tabi tutularak bir değişim miktarı ve değişim miktarının işaretine bağlı olarak bir yön belirleme işlemi tamamlanır. Bu adımlar uygulanarak en başta doğrusal formda olan yolun, kaybın az olduğu yöne evrilerek yay şeklini alacağını söylemek yanlış olmayacaktır. Elde edilen değişim miktarı bir öğrenme katsayısı ile çarpılarak ilgili noktaya eklenir. Netice olarak o noktanın bir sonraki seviyedeki yeri belirlenmiş olur.
 
-![](Images/Example_Data/3.PNG)
+![](docs/Images/Example_Data/3.PNG)
 
 ## Bulgular
 
 Bu çalışmada metin verisi olarak twitter yorumlarını içeren bir veri seti ve görüntü verisi olarakta Fashion MNIST veri seti ile çalışılmıştır. Her bir veri seti için ayrı model yapısı oluşturulmuştur. Oluşturulan model yapıları için 5 adet farklı başlangıç noktası atanmış ve modeller bu başlangıç noktaları ile eğitilmiştir. Eğitilen modellerin farklı son noktalara ulaştığı PCA ile 2 boyutlu ve 3 boyutlu olarak görselleştirilmiştir.
 
-![](Images/Images_Data/3.png)
+![](docs/Images/docs/Images_Data/3.png)
 
 Son noktaların elde edilmesinden sonra, noktalar ikili olarak ele alınarak her iki son nokta arasında 5 noktadan oluşan bir doğru oluşturulmuştur. Daha sonra bu noktalar üzerinde NEB algoritması uygulanmıştır. Bu noktada iterasyon sayısı olarak 500 belirlenmiştir. Öğrenme kat sayısı ise 1-e6 olarak belirlenmiştir. Öğrenme kat sayısının bu denli düşük olmasının sebebi modelin çok uç noktalara ilerlemeye meyilli olmasındandır. Toplamda 5 adet son nokta arasında 5 adet yol bularak, tüm noktalar arasında test başarısını düşürmeden ilerlenebilecek bir yol bulunmuştur.
 
-![](Images/Example_Data/4.PNG)
+![](docs/Images/Example_Data/4.PNG)
 
 Yapılan işlemler sonucunda elde edilen yeni noktalar ile ilk çizilen doğru üzerindeki noktalar ve modellerin ulaştığı ilk son noktalar karşılaştırılmıştır. Yeni çizilen yolun test kayıp değerleri en baştaki doğrusal yolun test kayıp değerlerine göre ortalama %50 daha düşük olduğu gözlemlenmiştir. Benzer bir karşılaştırma sabit kabul edilen son noktalar ile yapılmış ve test kayıp değerlerinin bir birine çok yakın olduğu tespit edilmiştir.
 
